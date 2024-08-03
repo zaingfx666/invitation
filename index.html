@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f8f9fa;
+            background-color: #ffe6e6;
             color: #343a40;
             margin: 0;
             padding: 0;
@@ -20,24 +20,53 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         .button {
             display: inline-block;
             padding: 10px 20px;
             margin-top: 20px;
             color: #fff;
-            background-color: #007bff;
+            background-color: #ff4d4d;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
         .button:hover {
-            background-color: #0056b3;
+            background-color: #ff1a1a;
         }
         #confirmation {
             display: none;
             margin-top: 20px;
             font-size: 18px;
+        }
+        @keyframes confetti {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #ff4d4d;
+            opacity: 0.7;
+            top: 0;
+            animation: confetti 3s ease-out infinite;
+        }
+        .flower {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background: url('path/to/flower-image.png') no-repeat center center;
+            background-size: contain;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pop 0.5s ease-out;
+        }
+        @keyframes pop {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            100% { transform: translate(-50%, -50%) scale(1); }
         }
     </style>
 </head>
@@ -64,6 +93,33 @@
 <script>
     function rsvp() {
         document.getElementById('confirmation').style.display = 'block';
+        popConfetti();
+        popFlower();
+    }
+
+    function popConfetti() {
+        for (let i = 0; i < 100; i++) {
+            let confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove();
+            }, 3000);
+        }
+    }
+
+    function popFlower() {
+        let flower = document.createElement('div');
+        flower.classList.add('flower');
+        document.body.appendChild(flower);
+
+        setTimeout(() => {
+            flower.remove();
+        }, 1000);
     }
 </script>
 
